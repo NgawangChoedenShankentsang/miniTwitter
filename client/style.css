@@ -18,7 +18,9 @@ body {
 
 #logo-container {
   display: flex;
+  flex-direction: column; /* add this line */
   justify-content: center;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -26,6 +28,17 @@ h1 {
   font-family: 'Pacifico', cursive;
   font-size: 32px;
   color: #262626;
+  margin-bottom: 0; 
+}
+
+h2 {
+  margin-top: 0;
+}
+
+#message {
+  margin-top: 10px;
+  color: red;
+  font-weight: bold;
 }
 
 #login-form {

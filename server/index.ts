@@ -3,6 +3,7 @@ import { API } from './api'
 import http from 'http'
 import { resolve, dirname } from 'path'
 import { Database } from './database'
+import dotenv from 'dotenv'
 
 class Backend {
   // Properties
@@ -26,9 +27,11 @@ class Backend {
 
   // Constructor
   constructor() {
+    dotenv.config()
     this._app = express()
     this._database = new Database()
-    this._api = new API(this._app)
+    this._app.use(express.json())
+    this._api = new API(this._app, this._database)
     this._env = process.env.NODE_ENV || 'development'
 
     this.setupStaticFiles()
