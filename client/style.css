@@ -24,11 +24,10 @@ body {
   margin-bottom: 20px;
 }
 
-h1 {
-  font-family: 'Pacifico', cursive;
-  font-size: 32px;
-  color: #262626;
-  margin-bottom: 0; 
+img {
+  height: auto;
+  width: 100%;
+  margin-right: 10px;
 }
 
 h2 {

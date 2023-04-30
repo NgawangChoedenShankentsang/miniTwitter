@@ -1,0 +1,97 @@
+body {
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    border: 1px solid #ccc;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+}
+
+img {
+    height: 80px;
+    width: 10%;
+    margin-left: 5%;
+  }
+
+.nav-links a {
+    margin-left: 20px;
+    text-decoration: none;
+    color: #333;
+}
+
+.nav-links a:hover {
+    color: #777;
+}
+
+.nav-item.active {
+    font-weight: bold;
+    color: #222;
+}
+
+
+#createPost {
+    margin: 40px;
+    margin-left: 5%;
+}
+
+#postContent {
+    display: block;
+    font-size: 25px;
+    width: 95%;
+    padding: 10px;
+    resize: none;
+}
+.post {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.deleteButton, .likeButton, .commentButton {
+    float: right;
+    padding: 5px 10px;
+    margin-left: 5px;
+    cursor: pointer;
+}
+
+.deleteButton {
+    background-color: red;
+    color: white;
+}
+
+.likeButton, .commentButton {
+    background-color: #007bff;
+    color: white;
+}
+
+.commentButton {
+    background-color: #28a745;
+}
+
+button {
+    font-size: 18px;
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+input[type="text"] {
+    font-family: 'Pacifico', cursive;
+    font-size: 18px;
+    padding: 8px 12px;
+}
+textarea::placeholder {
+    font-family: 'Pacifico', cursive;
+}
+
+textarea {
+    font-family: 'Pacifico', cursive;
+}
