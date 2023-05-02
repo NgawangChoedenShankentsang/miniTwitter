@@ -17,6 +17,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const signupForm = document.getElementById('signup-form');
   const messageElement = document.getElementById('message');
 
+  function isValidUsername(username) {
+    // Ensure username is a string with 3 to 20 alphanumeric characters
+    return typeof username === 'string' && /^[A-Za-z0-9]{3,20}$/.test(username);
+  }
+  
+  function isValidPassword(password) {
+    // Ensure password is a string with 8 to 100 characters
+    return typeof password === 'string' && /^.{8,100}$/.test(password);
+  }
+
   if (loginForm) {
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -24,6 +34,10 @@ document.addEventListener('DOMContentLoaded', function () {
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
 
+      if (!isValidUsername(username) || !isValidPassword(password)) {
+        messageElement.innerHTML = 'Invalid username or password format';
+        return;
+      }
       try {
         const response = await fetch('/login', {
           method: 'POST',
@@ -55,7 +69,11 @@ document.addEventListener('DOMContentLoaded', function () {
   
       const username = document.getElementById('signup-username').value;
       const password = document.getElementById('signup-password').value;
-  
+      
+      if (!isValidUsername(username) || !isValidPassword(password)) {
+        messageElement.innerHTML = 'Invalid username or password format';
+        return;
+      }
       try {
         const response = await fetch('/register', {
           method: 'POST',
