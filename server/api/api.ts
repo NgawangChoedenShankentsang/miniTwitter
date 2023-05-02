@@ -13,6 +13,8 @@ export class API {
 
     this.app.post('/register', this.registerUser)
     this.app.post('/login', this.loginUser)
+    this.app.post('/posts', this.createPost)
+    //this.app.get('/comments')
   }
 
   registerUser = async (req: Request, res: Response) => {
@@ -67,4 +69,21 @@ export class API {
       res.status(500).json({ message: 'Error logging in' })
     }
   }
+
+  createPost = async (req: Request, res: Response) => {
+    const { content } = req.body
+  
+    try {
+      const result = await this.database.executeSQL(
+        `INSERT INTO tweets (content) VALUES ('${content}') RETURNING id, content`
+      )
+      const newPost = result[0]
+      res.status(201).json(newPost)
+    } catch (error) {
+      console.log(error)
+      res.status(500).json({ message: 'Error creating post' })
+    }
+  }
+
+  
 }

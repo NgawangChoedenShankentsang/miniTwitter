@@ -10,11 +10,23 @@ CREATE TABLE IF NOT EXISTS users (
 const TWEET_TABLE = `
 CREATE TABLE IF NOT EXISTS tweets (
     id INT NOT NULL AUTO_INCREMENT,
-    user_id INT NOT NULL,
     content VARCHAR(255) NOT NULL,
+    user_id INT NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 `
 
-export { USER_TABLE, TWEET_TABLE }
+const COMMENT_TABLE = `
+CREATE TABLE IF NOT EXISTS comments (
+    id INT NOT NULL AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    tweet_id INT NOT NULL,
+    content VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (tweet_id) REFERENCES tweets(id)
+);
+`
+
+export { USER_TABLE, TWEET_TABLE, COMMENT_TABLE }
