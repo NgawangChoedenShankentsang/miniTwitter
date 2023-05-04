@@ -15,6 +15,9 @@ export class API {
     this.app.post('/login', this.loginUser)
     this.app.post('/posts', this.createPost)
     this.app.delete('/posts/:id', this.deletePost);
+    this.app.post('/posts/:id/like', this.likePost);
+    this.app.post('/posts/:id/dislike', this.dislikePost);
+
     //this.app.get('/comments')
   }
 
@@ -111,5 +114,72 @@ export class API {
       res.status(500).json({ message: 'Error deleting post' });
     }
   }
+
+  likePost = async (req: Request, res: Response) => {
+    const postId = req.params.id;
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
   
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    } catch (error) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const user_id = decoded.id;
+  
+    try {
+      const existingLike = await this.database.executeSQL(
+        `SELECT * FROM likes WHERE user_id=${user_id} AND tweet_id=${postId}`
+      );
+  
+      if (existingLike.length > 0) {
+        return res.status(409).json({ message: "Post already liked" });
+      }
+  
+      await this.database.executeSQL(
+        `INSERT INTO likes (user_id, tweet_id) VALUES (${user_id}, ${postId})`
+      );
+      res.status(201).json({ message: "Post liked successfully" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error liking post" });
+    }
+  }
+  
+  dislikePost = async (req: Request, res: Response) => {
+    const postId = req.params.id;
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+  
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    } catch (error) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const user_id = decoded.id;
+  
+    try {
+      const existingLike = await this.database.executeSQL(
+        `SELECT * FROM dislikes WHERE user_id=${user_id} AND tweet_id=${postId}`
+      );
+  
+      if (existingLike.length > 0) {
+        return res.status(409).json({ message: "Post already disliked" });
+      }
+  
+      await this.database.executeSQL(
+        `INSERT INTO dislikes (user_id, tweet_id) VALUES (${user_id}, ${postId})`
+      );
+      res.status(201).json({ message: "Post disliked successfully" });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Error disliking post" });
+    }
+  }
 }

@@ -56,7 +56,7 @@ img {
     margin: 20px 0;
 }
 
-.deleteButton, .likeButton, .commentButton {
+.deleteButton, .likeButton, .commentButton, .dislike {
     float: right;
     padding: 5px 10px;
     margin-left: 5px;
@@ -72,7 +72,10 @@ img {
     background-color: #007bff;
     color: white;
 }
-
+.dislike {
+    background-color: black;
+    color: white;
+}
 .commentButton {
     background-color: #28a745;
 }

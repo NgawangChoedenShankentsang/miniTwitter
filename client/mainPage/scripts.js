@@ -48,10 +48,57 @@ function createPost(content, postId) {
     const likeButton = document.createElement("button");
     likeButton.classList.add("likeButton");
     likeButton.textContent = `Like (${likeCount})`;
-    likeButton.addEventListener("click", () => {
-        likeCount++;
-        likeButton.textContent = `Like (${likeCount})`;
-    });
+    likeButton.addEventListener("click", async () => {
+      try {
+          const response = await fetch(`/posts/${postId}/like`, {
+              method: "POST",
+              headers: {
+                  "Authorization": `Bearer ${localStorage.getItem("token")}`,
+              },
+          });
+
+          if (response.ok) {
+              likeCount++;
+              likeButton.textContent = `Like (${likeCount})`;
+              likeButton.disabled = true;
+          } else if (response.status === 409) {
+              alert("You have already liked this post");
+          } else {
+              alert("Error liking post");
+          }
+      } catch (error) {
+          console.log(error);
+          alert("Error liking post");
+      }
+  });
+
+    let disLikeCount = 0;
+    const dislike = document.createElement("button");
+    dislike.classList.add("dislike");
+    dislike.textContent = `Dislike (${disLikeCount})`;
+    dislike.addEventListener("click", async() => {
+      try {
+        const response = await fetch(`/posts/${postId}/dislike`, {
+          method: "POST",
+          headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+      });
+      if (response.ok) {
+        disLikeCount++;
+        dislike.textContent = `Dislike (${disLikeCount})`;
+        dislike.disabled = true;
+      } else if (response.status === 409) {
+          alert("You have already liked this post");
+      } else {
+          alert("Error liking post");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Error liking post");
+    }
+});
+
 
     const commentButton = document.createElement("button");
     commentButton.classList.add("commentButton");
@@ -91,6 +138,7 @@ function createPost(content, postId) {
     post.appendChild(postContent);
     post.appendChild(deleteButton);
     post.appendChild(likeButton);
+    post.appendChild(dislike);
     post.appendChild(commentButton);
     post.appendChild(commentForm);
     post.appendChild(commentsSection);
