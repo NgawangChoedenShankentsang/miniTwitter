@@ -14,6 +14,7 @@ export class API {
     this.app.post('/register', this.registerUser)
     this.app.post('/login', this.loginUser)
     this.app.post('/posts', this.createPost)
+    this.app.delete('/posts/:id', this.deletePost);
     //this.app.get('/comments')
   }
 
@@ -72,6 +73,7 @@ export class API {
 
   createPost = async (req: Request, res: Response) => {
     const { content } = req.body; 
+    console.log("Request Body:", req.body); // debugging
     // Get the user_id from the JWT token
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
@@ -90,10 +92,24 @@ export class API {
         `INSERT INTO tweets (content, user_id) VALUES ('${content}', ${user_id}) RETURNING id, content`
       );
       const newPost = result[0];
+      console.log("New Post:", newPost); // debugging
       res.status(201).json(newPost);
     } catch (error) {
       console.log(error);
       res.status(500).json({ message: "Error creating post" });
     }
-  };  
+  }
+
+  deletePost = async (req: Request, res: Response) => {
+    const postId = req.params.id;
+  
+    try {
+      await this.database.executeSQL(`DELETE FROM tweets WHERE id=${postId}`);
+      res.status(200).json({ message: 'Post deleted successfully' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Error deleting post' });
+    }
+  }
+  
 }

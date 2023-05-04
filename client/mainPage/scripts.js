@@ -13,9 +13,10 @@ function createComment(text) {
     return comment;
 }
 
-function createPost(content) {
+function createPost(content, postId) {
     const post = document.createElement("div");
     post.classList.add("post");
+    post.setAttribute("data-id", postId);
 
     const postContent = document.createElement("p");
     postContent.textContent = content;
@@ -23,9 +24,25 @@ function createPost(content) {
     const deleteButton = document.createElement("button");
     deleteButton.classList.add("deleteButton");
     deleteButton.textContent = "Delete";
-    deleteButton.addEventListener("click", () => {
+    deleteButton.addEventListener("click", async () => {
+      try {
+        const response = await fetch(`/posts/${postId}`, {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+      });
+      
+      if (response.ok) {
         postList.removeChild(post);
-    });
+      } else {
+        alert("Error deleting post");
+      }
+      }   catch (error) {
+        console.log(error);
+        alert("Error deleting post");
+      }
+      });
 
     let likeCount = 0;
     const likeButton = document.createElement("button");
@@ -81,30 +98,37 @@ function createPost(content) {
 }
 
 postForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const postContent = document.getElementById("postContent");
-    if (postContent.value.trim()) {
-      try {
-        const response = await fetch("/posts", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`,
-          },
-          body: JSON.stringify({ content: postContent.value }),
-        });
-  
-        if (response.ok) {
-          const newPost = await response.json();
-          createPost(newPost.content);
-          postContent.value = "";
-        } else {
-          alert("Error creating post");
-        }
-      } catch (error) {
-        console.log(error);
+  event.preventDefault();
+  const postContent = document.getElementById("postContent");
+  if (postContent.value.trim()) {
+    try {
+      const response = await fetch("/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ content: postContent.value }),
+      });
+
+      console.log("Response:", response); // debugging
+
+      if (response.ok) {
+        const responseText = await response.text();
+        console.log("Response Text:", responseText); // debugging
+        const newPost = JSON.parse(responseText);
+        console.log("Response:", response, "Response JSON:", newPost); // debugging
+        createPost(newPost.content, newPost.id);
+        postContent.value = "";
+      } else {
+        console.log("Response:", response); // debugging
         alert("Error creating post");
       }
+    } catch (error) {
+      console.log("Error creating post. Exception:", error); // debugging
+      alert("Error creating post");
     }
+  }
 });
+
   
