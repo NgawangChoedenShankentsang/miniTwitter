@@ -73,11 +73,11 @@ export class API {
       res.status(500).json({ message: 'Error logging in' })
     }
   }
-
   createPost = async (req: Request, res: Response) => {
     const { content } = req.body; 
     console.log("Request Body:", req.body); // debugging
     // Get the user_id from the JWT token
+    // Stack Overflow: https://stackoverflow.com/questions/48813683/req-headers-split-is-not-a-function-when-getting-token-from-header
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
       return res.status(401).json({ message: "Unauthorized" });

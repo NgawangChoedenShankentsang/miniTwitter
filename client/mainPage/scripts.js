@@ -29,6 +29,7 @@ function createPost(content, postId) {
         const response = await fetch(`/posts/${postId}`, {
           method: "DELETE",
           headers: {
+            //Stack Overflow: https://stackoverflow.com/questions/55631012/how-to-store-jwt-token-in-localstorage-and-send-it-back-to-the-server-with-heade
             "Authorization": `Bearer ${localStorage.getItem("token")}`,
           },
       });

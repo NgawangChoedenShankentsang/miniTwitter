@@ -19,11 +19,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function isValidUsername(username) {
     // Ensure username is a string with 3 to 20 alphanumeric characters
+    // Stack Overflow: https://stackoverflow.com/questions/12018245/regular-expression-to-validate-username
     return typeof username === 'string' && /^[A-Za-z0-9]{3,20}$/.test(username);
   }
   
   function isValidPassword(password) {
     // Ensure password is a string with 8 to 100 characters
+    // Stack Overflow: https://stackoverflow.com/questions/12018245/regular-expression-to-validate-username
     return typeof password === 'string' && /^.{8,100}$/.test(password);
   }
 
