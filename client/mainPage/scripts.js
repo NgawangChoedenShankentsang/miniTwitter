@@ -80,11 +80,31 @@ function createPost(content) {
     postList.appendChild(post);
 }
 
-postForm.addEventListener("submit", (event) => {
+postForm.addEventListener("submit", async (event) => {
     event.preventDefault();
     const postContent = document.getElementById("postContent");
     if (postContent.value.trim()) {
-        createPost(postContent.value);
-        postContent.value = "";
+      try {
+        const response = await fetch("/posts", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({ content: postContent.value }),
+        });
+  
+        if (response.ok) {
+          const newPost = await response.json();
+          createPost(newPost.content);
+          postContent.value = "";
+        } else {
+          alert("Error creating post");
+        }
+      } catch (error) {
+        console.log(error);
+        alert("Error creating post");
+      }
     }
 });
+  

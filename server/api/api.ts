@@ -71,19 +71,29 @@ export class API {
   }
 
   createPost = async (req: Request, res: Response) => {
-    const { content } = req.body
-  
+    const { content } = req.body; 
+    // Get the user_id from the JWT token
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    
+    let decoded;
+    try {
+      decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    } catch (error) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const user_id = decoded.id;
     try {
       const result = await this.database.executeSQL(
-        `INSERT INTO tweets (content) VALUES ('${content}') RETURNING id, content`
-      )
-      const newPost = result[0]
-      res.status(201).json(newPost)
+        `INSERT INTO tweets (content, user_id) VALUES ('${content}', ${user_id}) RETURNING id, content`
+      );
+      const newPost = result[0];
+      res.status(201).json(newPost);
     } catch (error) {
-      console.log(error)
-      res.status(500).json({ message: 'Error creating post' })
+      console.log(error);
+      res.status(500).json({ message: "Error creating post" });
     }
-  }
-
-  
+  };  
 }
