@@ -18,16 +18,35 @@
             </div>
         </nav>
     </header>
+    
     <main>
-        <section id="createPost">
-            <h2>Create Post</h2>
-            <form id="postForm">
-                <textarea id="postContent" placeholder="Write your post here..."></textarea>
-                <button type="submit">submit</button>
+        <section>
+            <h2>Change Password</h2>
+            <form id="changePasswordForm">
+                <label for="currentPassword">Current Password</label>
+                <input type="password" id="currentPassword" name="currentPassword" required>
+
+                <label for="newPassword">New Password</label>
+                <input type="password" id="newPassword" name="newPassword" required>
+
+                <label for="confirmNewPassword">Confirm New Password</label>
+                <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+
+                <button type="submit">Save</button>
             </form>
         </section>
-        <section id="postList"></section>
+
+        <section>
+            <h2>Change Username</h2>
+            <form id="changeUsernameForm">
+                <label for="newUsername">New Username</label>
+                <input type="text" id="newUsername" name="newUsername" required>
+
+                <button type="submit">Save</button>
+            </form>
+        </section>
     </main>
+    
     <script src="scripts.js"></script>
 </body>
 </html>
