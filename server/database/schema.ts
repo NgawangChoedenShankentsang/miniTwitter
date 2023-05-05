@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 `
 const LIKE_TABLE = `
-CREATE TABLE likes (
+CREATE TABLE IF NOT EXISTS likes (
     user_id INT,
     tweet_id INT,
     PRIMARY KEY (user_id, tweet_id),
@@ -16,7 +16,7 @@ CREATE TABLE likes (
 );
 `
 const DISLIKE_TABLE = `
-CREATE TABLE dislikes (
+CREATE TABLE IF NOT EXISTS dislikes (
     user_id INT,
     tweet_id INT,
     PRIMARY KEY (user_id, tweet_id),
@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS tweets (
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
 `
-
 const COMMENT_TABLE = `
 CREATE TABLE IF NOT EXISTS comments (
     id INT NOT NULL AUTO_INCREMENT,
@@ -45,5 +44,4 @@ CREATE TABLE IF NOT EXISTS comments (
     FOREIGN KEY (tweet_id) REFERENCES tweets(id)
 );
 `
-
 export { USER_TABLE, TWEET_TABLE, COMMENT_TABLE, LIKE_TABLE, DISLIKE_TABLE }
