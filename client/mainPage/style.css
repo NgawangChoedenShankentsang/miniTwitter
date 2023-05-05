@@ -16,12 +16,6 @@ nav {
     padding: 20px;
 }
 
-img {
-    height: 80px;
-    width: 10%;
-    margin-left: 5%;
-  }
-
 .nav-links a {
     margin-left: 20px;
     text-decoration: none;
@@ -37,6 +31,36 @@ img {
     color: #222;
 }
 
+.fieldBox {
+    display: flex;
+    flex-direction: column;
+}
+input[type="text"], input[type="password"] {
+    font-family: 'Pacifico', cursive;
+    font-size: 18px;
+    padding: 8px 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+}
+.profile-section {
+    margin: 30px auto;
+    max-width: 500px;
+    border: 1px solid #ccc;
+    padding: 20px;
+}
+.profile-section h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.saveButton {
+    font-size: 18px;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #0095f6;
+    color: white;
+    border: none;
+}
 
 #createPost {
     margin: 40px;

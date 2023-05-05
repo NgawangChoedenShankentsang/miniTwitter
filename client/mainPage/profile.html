@@ -20,29 +20,21 @@
     </header>
     
     <main>
-        <section>
+        <section class="profile-section">
             <h2>Change Password</h2>
-            <form id="changePasswordForm">
-                <label for="currentPassword">Current Password</label>
-                <input type="password" id="currentPassword" name="currentPassword" required>
-
-                <label for="newPassword">New Password</label>
-                <input type="password" id="newPassword" name="newPassword" required>
-
-                <label for="confirmNewPassword">Confirm New Password</label>
-                <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
-
-                <button type="submit">Save</button>
+            <form class="fieldBox">
+                <input type="password" id="currentPassword" name="currentPassword" placeholder="Current Password" required>
+                <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
+                <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password" required>
+                <button type="submit" class="saveButton">Save</button>
             </form>
         </section>
 
-        <section>
+        <section class="profile-section">
             <h2>Change Username</h2>
-            <form id="changeUsernameForm">
-                <label for="newUsername">New Username</label>
-                <input type="text" id="newUsername" name="newUsername" required>
-
-                <button type="submit">Save</button>
+            <form class="fieldBox">
+                <input type="text" id="newUsername" name="newUsername" placeholder="New Username" required>
+                <button type="submit" class="saveButton">Save</button>
             </form>
         </section>
     </main>
