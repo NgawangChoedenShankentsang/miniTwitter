@@ -1,3 +1,5 @@
+# Important
+Set UTF-8 encoding in VS Code
 # Getting started
 Clone the Mini Twitter repository from GitHub
 ```bash
