@@ -30,7 +30,7 @@
     "livereload": "^0.9.3",
     "prettier": "^2.8.7",
     "typescript": "^5.0.3",
-    "vite": "^4.2.1",
+    "vite": "^4.3.5",
     "vite-express": "^0.5.1",
     "vite-plugin-full-reload": "^1.0.5",
     "vite-plugin-node": "^3.0.2"
